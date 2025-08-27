@@ -1,0 +1,1 @@
+add_executable(rubix-cube main.c)

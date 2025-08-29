@@ -8,6 +8,7 @@
 # define WINDOW_HEIGHT 600
 
 void error_callback(int error_code, const char* description);
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 int main() {
     glfwSetErrorCallback(error_callback);
@@ -22,13 +23,11 @@ int main() {
         return -1;
     }
     glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     // Loading OpenGL function pointers
     int version = gladLoadGL(glfwGetProcAddress);
     printf("GL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
-
-    // Viewport
-    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
     // Render loop
     while (!glfwWindowShouldClose(window)) {
@@ -48,4 +47,9 @@ int main() {
 
 void error_callback(int error_code, const char* description) {
     printf("GLFW Error %d: %s\n", error_code, description);
+}
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
 }

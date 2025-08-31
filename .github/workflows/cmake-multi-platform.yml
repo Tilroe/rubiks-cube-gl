@@ -53,9 +53,11 @@ jobs:
         python-version: '3.13'
 
     # Submodule depedencies
-    - name: Install wayland-scanner for linux builds
+    - name: Install submodule dependencies
       if: runner.os == 'Linux'
-      run: sudo apt-get install -y libwayland-dev wayland-protocols libxkbcommon-dev
+      run: |
+        sudo apt update
+        sudo apt install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev libwayland-dev libxkbcommon-dev
       
     - name: Install python jinja2 package
       run: python3 -m pip install jinja2

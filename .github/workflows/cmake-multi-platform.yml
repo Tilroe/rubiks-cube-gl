@@ -48,6 +48,9 @@ jobs:
     - uses: actions/checkout@v4
       with:
         submodules: true
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
 
     # Submodule depedencies
     - name: Install wayland-scanner for linux builds
@@ -55,7 +58,7 @@ jobs:
       run: sudo apt-get install -y libwayland-dev wayland-protocols libxkbcommon-dev
       
     - name: Install python jinja2 package
-      run: python -m pip install jinja2
+      run: python3 -m pip install jinja2
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.

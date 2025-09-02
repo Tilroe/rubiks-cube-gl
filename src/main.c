@@ -38,51 +38,7 @@ int main() {
 
     // Shaders
     // -------------------------------
-    int success;
-    char info_log[512];
-    int log_length;
-
-    // vertex shader
-    unsigned int vertex_shader;
-    vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-    const Shader vertex_shader_src = shader_read("../shaders/basic.vert");
-    glShaderSource(vertex_shader, 1, &vertex_shader_src, NULL);
-    glCompileShader(vertex_shader);
-    glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(vertex_shader, 512, &log_length, info_log);
-        printf("Failed to compile vertex shader: %s\n", info_log);
-    }
-
-    // fragment shader
-    unsigned int fragment_shader;
-    fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-    const Shader fragment_shader_src = shader_read("../shaders/basic.frag");
-    glShaderSource(fragment_shader, 1, &fragment_shader_src, NULL);
-    glCompileShader(fragment_shader);
-    glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(fragment_shader, 512, &log_length, info_log);
-        printf("Failed to compile fragment shader: %s\n", info_log);
-    }
-
-    // shader program
-    unsigned int shader_program;
-    shader_program = glCreateProgram();
-    glAttachShader(shader_program, vertex_shader);
-    glAttachShader(shader_program, fragment_shader);
-    glLinkProgram(shader_program);
-    glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(shader_program, 512, &log_length, info_log);
-        printf("%s\n", info_log);
-    }
-
-    // cleanup
-    glDeleteShader(vertex_shader);
-    glDeleteShader(fragment_shader);
-    shader_free(vertex_shader_src);
-    shader_free(fragment_shader_src);
+    Shader shader = shader_create("../shaders/basic.vert", "../shaders/basic.frag");
 
     // Set up vertex data
     // -------------------------------
@@ -136,7 +92,7 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Draw triangle
-        glUseProgram(shader_program);
+        shader_use(shader);
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

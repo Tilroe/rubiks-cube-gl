@@ -1,24 +1,45 @@
 #ifndef FILE_READER_H
 #define FILE_READER_H
 
-#define BAD_SHADER NULL
 
-typedef char* Shader;
+
+#define BAD_SHADER 0
+
+typedef unsigned int Shader;
 
 /*
-* shader_read: Provided a file path, reads into a Shader. Returns
+* shader_read: Creates a new OpenGL shader program. A shader program is defined by providing a vertex shader, and a fragment shader
 * 
-* @param[in] path: Path to the shader
+* @param[in] vertex_shader_path: Path to the vertex shader file
+* @param[in] fragment_shader_path: Path to the fragment shader file
+* 
 * @return Resulting shader
 */
-Shader shader_read(const char* path);
+Shader shader_create(const char *vertex_shader_path, const char *fragment_shader_path);
 
 /*
-* shader_free: Release memory associated with shader source code
+* shader_use: Use this shader program in the OpenGL graphics pipeline
 * 
-* @param[in] shader: shader to free
+* @param[in] shader: shader program to use
 */
-void shader_free(Shader shader);
+void shader_use(Shader shader);
 
+/*
+* set_uniform_int: Set a integer uniform value to use in a shader program
+*
+* @param[in] shader: shader program to configure
+* @param[in] name: name of uniform
+* @param[in] value: value of uniform
+*/
+void set_uniform_int(Shader shader, const char *name, int value);
+
+/*
+* set_uniform_bool: Set a float uniform value to use in a shader program
+*
+* @param[in] shader: shader program to configure
+* @param[in] name: name of uniform
+* @param[in] value: value of uniform
+*/
+void set_uniform_float(Shader shader, const char *name, float value);
 
 #endif

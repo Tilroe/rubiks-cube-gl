@@ -1,5 +1,5 @@
-#ifndef FILE_READER_H
-#define FILE_READER_H
+#ifndef SHADER_H
+#define SHADER_H
 
 
 

@@ -10,8 +10,13 @@ target_link_libraries(rubix_cube
 # Custom libraries
 add_library(read_file read_file.c read_file.h)
 
-add_library(geometry geometry.c geometry.h)
-target_link_libraries(geometry m) # For math.h
+add_library(vector vector.c vector.h)
+target_link_libraries(vector m) # For math.h
+
+add_library(matrix matrix.c matrix.h)
+target_link_libraries(matrix 
+	PRIVATE vec
+)
 
 add_library(shader shader.h shader.c)
 target_link_libraries(shader

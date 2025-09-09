@@ -23,3 +23,9 @@ add_library(matrix matrix.c matrix.h)
 target_link_libraries(matrix 
 	PRIVATE vector
 )
+
+add_library(quaternion quaternion.c quaternion.h)
+target_link_libraries(quaternion
+	PRIVATE m # For math.h
+	PRIVATE matrix
+)

@@ -3,7 +3,6 @@
 
 #include <math.h>
 
-#include "vector.h"
 #include "matrix.h"
 
 typedef struct {

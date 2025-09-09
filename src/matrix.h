@@ -7,13 +7,7 @@
 
 typedef float mat4[16];
 
-/*
-* mat_copy: Copies src values into dest
-*
-* @param[in] dest: destination matrix. Copies into this
-* @param[in] src: source matrix. Copies from this
-*/
-void mat_copy(mat4 dest, mat4 src);
+void mat_copy(mat4 dest, const mat4 src);
 
 /*
 * Turn a matrix into an identity matrix
@@ -35,7 +29,7 @@ void mat_mul(mat4 a, mat4 b, mat4 c);
 * translate: Applies a translation to a given transformation matrix
 *
 * @param[in] mat: transformation matrix to modify
-* @param[in] mat
+* @param[in] translation: how much to translate by 
 */
 void translate(mat4 mat, const vec3 translation);
 

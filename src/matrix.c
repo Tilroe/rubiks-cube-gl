@@ -1,6 +1,8 @@
 #include "matrix.h"
 
-void mat_copy(mat4 dest, mat4 src) {
+#include <string.h> // for memcpy
+
+void mat_copy(mat4 dest, const mat4 src) {
     memcpy(dest, src, sizeof(float) * 16);
 }
 

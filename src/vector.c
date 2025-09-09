@@ -51,3 +51,15 @@ void vec3_cross(const vec3 a, const vec3 b, vec3 c) {
     c[1] = (a[2] * b[0]) - (a[0] * b[2]);
     c[2] = (a[0] * b[1]) - (a[1] * b[0]);
 }
+
+void vec3_add(const vec3 a, const vec3 b, vec3 c) {
+    c[0] = a[0] + b[0];
+    c[1] = a[1] + b[1];
+    c[2] = a[2] + b[2];
+}
+
+void vec3_sub(const vec3 a, const vec3 b, vec3 c) {
+    c[0] = a[0] - b[0];
+    c[1] = a[1] - b[1];
+    c[2] = a[2] - b[2];
+}

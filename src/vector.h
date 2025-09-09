@@ -16,6 +16,8 @@ void vec4_normalize(vec4 vec);
 float vec3_dot(const vec3 a, const vec3 b);
 float vec4_dot(const vec4 a, const vec4 b);
 
-void vec3_cross(const vec3 a, const vec3 b, vec3 c);
+void vec3_cross(const vec3 a, const vec3 b, vec3 c); // a x b = c
+void vec3_add(const vec3 a, const vec3 b, vec3 c); // a + b = c
+void vec3_sub(const vec3 a, const vec3 b, vec3 c); // a - b = c
 
 #endif

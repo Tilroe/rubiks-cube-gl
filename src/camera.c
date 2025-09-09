@@ -1,8 +1,12 @@
 #include "camera.h"
 
+#include <math.h>
+
+#define M_PI acos(-1.0)
+
 static vec3 pos; // Camera position
 
-void get_view_matrix(const vec3 target, const vec3 up, mat4 view_mat) {
+void get_view_matrix(const vec3 target, const vec3 up, mat4 mat) {
 	/*
 	* OpenGL camera convention is camera at origin with forward down the -z axis
 	* This makes x axis on the right, and y axis up
@@ -46,5 +50,27 @@ void get_view_matrix(const vec3 target, const vec3 up, mat4 view_mat) {
 	translate(translation_mat, (vec3){ -pos[0], -pos[1], -pos[2] });
 	
 	// Translate, then rotate
-	mat_mul(rotation_mat, translation_mat, view_mat);
+	mat_mul(rotation_mat, translation_mat, mat);
+}
+
+// Using https://www.khronos.org/opengl/wiki/GluPerspective_code as reference
+
+void get_perspective_matrix(const float fovy, const float aspect, const float near, const float far, mat4 mat) {
+	float t = near * tanf(fovy * M_PI / 360.0);
+	float r = t * aspect;
+	float b = -t;
+	float l = -r;
+	float n = near;
+	float f = far;
+
+	float r_l = r - l;
+	float t_b = t - b;
+	float f_n = f - n;
+
+	mat4 pm = {
+		2*n / r_l,	0,			(r+l) / r_l,	0,
+		0,			2*n/t_b,	(t+b) / t_b,	0,
+		0,			0,			-(f+n) / f_n,	-2*f*n/f_n,
+		0,			0,			-1,				0
+	};
 }

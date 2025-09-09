@@ -32,5 +32,6 @@ target_link_libraries(quaternion
 
 add_library(camera camera.c camera.h)
 target_link_libraries(camera
+	PRIVATE m # For math.h
 	PUBLIC matrix
 )

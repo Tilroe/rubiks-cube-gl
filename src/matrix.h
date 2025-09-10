@@ -26,12 +26,12 @@ void ident(mat4 mat);
 void mat_mul(const mat4 a, const mat4 b, mat4 c);
 
 /*
-* translate: Applies a translation to a given transformation matrix
+* translate: Creates a translation matrix
 *
-* @param[in] mat: transformation matrix to modify
+* @param[in] mat: output translation matrix
 * @param[in] translation: how much to translate by 
 */
-void translate(mat4 mat, const vec3 translation);
+void translation_mat(mat4 mat, const vec3 translation);
 
 
 #endif // !MATRIX_H

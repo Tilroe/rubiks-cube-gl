@@ -149,9 +149,7 @@ int main() {
         for (int p = 0; p < 2; p++) {
             mat4 model_translate, model_rotate, model;
 
-            ident(model_translate);
-            translate(model_translate, positions[p]);
-
+            translation_mat(model_translate, positions[p]);
             quaternion quat = quaternion_create((vec3) { 0, 5, 5 }, (angle += 0.001));
             quaternion_mat(quat, model_rotate);
 

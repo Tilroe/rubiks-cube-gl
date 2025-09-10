@@ -37,7 +37,7 @@ void get_view_matrix(const vec3 target, const vec3 up, mat4 mat) {
 	vec3_normalize(o_up);
 
 	// Transpose to get world->camera
-	mat4 rotation_mat = {
+	mat4 rotation = {
 		-left[0],		-left[1],		-left[2],		0,
 		o_up[0],		o_up[1],		o_up[2],		0,
 		-forward[0],	-forward[1],	-forward[2],	0,
@@ -45,12 +45,11 @@ void get_view_matrix(const vec3 target, const vec3 up, mat4 mat) {
 	};
 
 	// Translation of camera to origin
-	mat4 translation_mat;
-	ident(translation_mat);
-	translate(translation_mat, (vec3){ -pos[0], -pos[1], -pos[2] });
+	mat4 translation;
+	translation_mat(translation, (vec3){ -pos[0], -pos[1], -pos[2] });
 	
 	// Translate, then rotate
-	mat_mul(rotation_mat, translation_mat, mat);
+	mat_mul(rotation, translation, mat);
 }
 
 // Using https://www.khronos.org/opengl/wiki/GluPerspective_code as reference

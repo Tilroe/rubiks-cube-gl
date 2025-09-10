@@ -5,9 +5,15 @@
 #include <stdio.h>
 
 #include "shader.h"
+#include "camera.h"
+#include "matrix.h"
+#include "vector.h"
+
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
+int wwidth = WINDOW_WIDTH;
+int wheight = WINDOW_HEIGHT;
 
 void error_callback(int error_code, const char* description);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -43,23 +49,57 @@ int main() {
     // Set up vertex data
     // -------------------------------
     float vertices[] = {
-         // position        // colour
-         0.5f,  0.5f, 0.0f, // top right
-         0.5f, -0.5f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f, // bottom left
-        -0.5f,  0.5f, 0.0f, // top left 
+        // position
+        0, 0, 0,
+        0, 2, 0,
+        2, 0, 0,
+        2, 2, 0,
+        0, 0, 2,
+        0, 2, 2,
+        2, 0, 2,
+        2, 2, 2,
+    };
+
+    vec3 positions[] = {
+        {8, -1,  1},
+        {8,  3, -3}
     };
 
     float colours[] = {
-        1.0f, 0.0f, 1.0f,
-        1.0f, 0.0f, 1.0f,
-        1.0f, 0.0f, 1.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
         0.0f, 0.0f, 1.0f,
     };
 
     unsigned int indices[] = {
-        0, 1, 3,   // first triangle
-        1, 2, 3    // second triangle
+        // Front face (z = 0)
+        0, 1, 2,
+        2, 1, 3,
+
+        // Back face (z = 2)
+        4, 6, 5,
+        5, 6, 7,
+
+        // Left face (x = 0)
+        0, 4, 1,
+        1, 4, 5,
+
+        // Right face (x = 2)
+        2, 3, 6,
+        6, 3, 7,
+
+        // Bottom face (y = 0)
+        0, 2, 4,
+        4, 2, 6,
+
+        // Top face (y = 2)
+        1, 5, 3,
+        3, 5, 7
     };
 
     unsigned int element_buffer, vertex_buffer, colour_buffer, VAO;
@@ -83,6 +123,8 @@ int main() {
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(1);
 
+    
+
     // Render loop
     // -------------------------------
     while (!glfwWindowShouldClose(window)) {
@@ -91,10 +133,26 @@ int main() {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Draw triangle
+        // Active shader
         shader_use(shader);
+
+        // Camera & projection
+        mat4 view_mat, proj_mat;
+        get_view_matrix((vec3) { 8, 0, 0 }, (vec3) { 0, 1, 0 }, view_mat);
+        get_perspective_matrix(60.f, (float)wwidth / (float)wheight, 0.1f, 100.f, proj_mat);
+        set_uniform_mat4f(shader, "view", view_mat);
+        set_uniform_mat4f(shader, "projection", proj_mat);
+
+
+        // Drawing
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        for (int p = 0; p < 2; p++) {
+            mat4 model;
+            ident(model);
+            translate(model, positions[p]);
+            set_uniform_mat4f(shader, "model", model);
+            glDrawElements(GL_TRIANGLES, 3 * 2 * 6, GL_UNSIGNED_INT, 0); // 3 indices per triangle, 2 triangles per face, 6 faces
+        }
 
         // Swamp buffers and poll I/O
         glfwPollEvents();
@@ -112,5 +170,6 @@ void error_callback(int error_code, const char* description) {
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    glViewport(0, 0, width, height);
+    wwidth = width; wheight = height;
+    glViewport(0, 0, wwidth, wheight);
 }

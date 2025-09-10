@@ -6,6 +6,7 @@
 #include <glad/gl.h>
 
 #include "read_file.h"
+#include "matrix.h"
 
 static int check_shader_compilation(unsigned int shader_id);
 static int check_program_linking(Shader shader);
@@ -51,6 +52,10 @@ void set_uniform_int(Shader shader, const char *name, int value) {
 
 void set_uniform_float(Shader shader, const char *name, float value) {
 	glUniform1f(glGetUniformLocation(shader, name), value);
+}
+
+void set_uniform_mat4f(Shader shader, const char *name, mat4 mat) {
+	glUniformMatrix4fv(glGetUniformLocation(shader, name), 1, GL_TRUE, mat);
 }
 
 

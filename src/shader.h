@@ -1,7 +1,7 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-
+#include "matrix.h"
 
 #define BAD_SHADER 0
 
@@ -34,12 +34,21 @@ void shader_use(Shader shader);
 void set_uniform_int(Shader shader, const char *name, int value);
 
 /*
-* set_uniform_bool: Set a float uniform value to use in a shader program
+* set_uniform_float: Set a float uniform value to use in a shader program
 *
 * @param[in] shader: shader program to configure
 * @param[in] name: name of uniform
 * @param[in] value: value of uniform
 */
 void set_uniform_float(Shader shader, const char *name, float value);
+
+/*
+* set_uniform_mat4f: Set a Matrix4f uniform value to use in a shader program
+*
+* @param[in] shader: shader program to configure
+* @param[in] name: name of uniform
+* @param[in] value: value of uniform
+*/
+void set_uniform_mat4f(Shader shader, const char *name, mat4 mat);
 
 #endif

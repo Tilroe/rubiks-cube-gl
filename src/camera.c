@@ -73,4 +73,5 @@ void get_perspective_matrix(const float fovy, const float aspect, const float ne
 		0,			0,			-(f+n) / f_n,	-2*f*n/f_n,
 		0,			0,			-1,				0
 	};
+	mat_copy(mat, pm);
 }

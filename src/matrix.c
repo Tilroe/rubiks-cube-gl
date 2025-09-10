@@ -15,10 +15,10 @@ void ident(mat4 mat) {
 }
 
 
-void mat_mul(mat4 a, mat4 b, mat4 c) {
+void mat_mul(const mat4 a, const mat4 b, mat4 c) {
     for (int row = 0; row < 4; row++) {
         for (int col = 0; col < 4; col++) {
-            int partial_sum = 0;
+            float partial_sum = 0;
             for (int i = 0; i < 4; i++) {
                 partial_sum += a[COORD_IDX(row, i, 4)] * b[COORD_IDX(i, col, 4)];
             }
@@ -27,7 +27,7 @@ void mat_mul(mat4 a, mat4 b, mat4 c) {
     }
 }
 
-void translate(mat4 mat, vec3 translation) {
+void translate(mat4 mat, const vec3 translation) {
     mat4 translation_matrix;
     ident(translation_matrix);
     translation_matrix[COORD_IDX(0, 3, 4)] = translation[0];

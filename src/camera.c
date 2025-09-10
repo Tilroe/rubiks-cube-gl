@@ -4,7 +4,7 @@
 
 #define M_PI acos(-1.0)
 
-static vec3 pos; // Camera position
+static vec3 pos = { 0, 0, 0 }; // Camera position
 
 void get_view_matrix(const vec3 target, const vec3 up, mat4 mat) {
 	/*
@@ -56,7 +56,7 @@ void get_view_matrix(const vec3 target, const vec3 up, mat4 mat) {
 // Using https://www.khronos.org/opengl/wiki/GluPerspective_code as reference
 
 void get_perspective_matrix(const float fovy, const float aspect, const float near, const float far, mat4 mat) {
-	float t = near * tanf(fovy * M_PI / 360.0);
+	float t = near * tanf(fovy * (float)M_PI / 360.f);
 	float r = t * aspect;
 	float b = -t;
 	float l = -r;

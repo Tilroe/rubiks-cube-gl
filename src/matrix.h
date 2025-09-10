@@ -23,7 +23,7 @@ void ident(mat4 mat);
 * @param[in] b: right matrix in multiplication
 * @param[out] c: result of multiplication
 */
-void mat_mul(mat4 a, mat4 b, mat4 c);
+void mat_mul(const mat4 a, const mat4 b, mat4 c);
 
 /*
 * translate: Applies a translation to a given transformation matrix

@@ -10,7 +10,7 @@ quaternion quaternion_create(const vec3 axis, const float angle) {
 	vec3 axis_copy;
 	vec3_copy(axis_copy, axis);
 	vec3_normalize(axis_copy);
-	float rads = angle * M_PI / 180;
+	float rads = angle * (float)M_PI / 180.f;
 	float sine = sinf(rads);
 	
 	quaternion q;

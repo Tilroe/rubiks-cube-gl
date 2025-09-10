@@ -13,11 +13,11 @@ void vec4_copy(vec4 dest, const vec4 src) {
     memcpy(dest, src, sizeof(float) * 4);
 }
 
-float vec3_norm(vec3 vec) {
+float vec3_norm(const vec3 vec) {
     return sqrtf((vec[0] * vec[0]) + (vec[1] * vec[1]) + (vec[2] * vec[2]));
 }
 
-float vec4_norm(vec4 vec) {
+float vec4_norm(const vec4 vec) {
     return sqrtf((vec[0] * vec[0]) + (vec[1] * vec[1]) + (vec[2] * vec[2]) + (vec[3] * vec[3]));
 }
 
@@ -38,11 +38,11 @@ void vec4_normalize(vec4 vec) {
     vec[3] /= magnitude;
 }
 
-float vec3_dot(vec3 a, vec3 b) {
+float vec3_dot(const vec3 a, const vec3 b) {
     return (a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2]);
 }
 
-float vec4_dot(vec4 a, vec4 b) {
+float vec4_dot(const vec4 a, const vec4 b) {
     return (a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2]) + (a[3] * b[3]);
 }
 

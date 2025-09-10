@@ -6,6 +6,7 @@
 
 #include "shader.h"
 #include "camera.h"
+#include "quaternion.h"
 #include "matrix.h"
 #include "vector.h"
 
@@ -50,19 +51,19 @@ int main() {
     // -------------------------------
     float vertices[] = {
         // position
-        0, 0, 0,
-        0, 2, 0,
-        2, 0, 0,
-        2, 2, 0,
-        0, 0, 2,
-        0, 2, 2,
-        2, 0, 2,
-        2, 2, 2,
+        -1, -1, -1,
+        -1, 1, -1,
+        1, -1, -1,
+        1, 1, -1,
+        -1, -1, 1,
+        -1, 1, 1,
+        1, -1, 1,
+        1, 1, 1,
     };
 
     vec3 positions[] = {
-        {8, -1,  1},
-        {8,  3, -3}
+        {20, -1,  2},
+        {20,  1, -2}
     };
 
     float colours[] = {
@@ -124,11 +125,10 @@ int main() {
     glEnableVertexAttribArray(1);
 
     
-
+    float angle = 0.f;
     // Render loop
     // -------------------------------
     while (!glfwWindowShouldClose(window)) {
-
         // Clear screen
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -147,9 +147,16 @@ int main() {
         // Drawing
         glBindVertexArray(VAO);
         for (int p = 0; p < 2; p++) {
-            mat4 model;
-            ident(model);
-            translate(model, positions[p]);
+            mat4 model_translate, model_rotate, model;
+
+            ident(model_translate);
+            translate(model_translate, positions[p]);
+
+            quaternion quat = quaternion_create((vec3) { 0, 5, 5 }, (angle += 0.001));
+            quaternion_mat(quat, model_rotate);
+
+            mat_mul(model_translate, model_rotate, model);
+
             set_uniform_mat4f(shader, "model", model);
             glDrawElements(GL_TRIANGLES, 3 * 2 * 6, GL_UNSIGNED_INT, 0); // 3 indices per triangle, 2 triangles per face, 6 faces
         }

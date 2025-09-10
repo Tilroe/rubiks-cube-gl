@@ -15,9 +15,9 @@ quaternion quaternion_create(const vec3 axis, const float angle) {
 	
 	quaternion q;
 	q.s = cosf(rads);
-	q.x = axis[0] * sine;
-	q.y = axis[1] * sine;
-	q.z = axis[2] * sine;
+	q.x = axis_copy[0] * sine;
+	q.y = axis_copy[1] * sine;
+	q.z = axis_copy[2] * sine;
 	return q;
 }
 

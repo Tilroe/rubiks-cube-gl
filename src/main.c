@@ -43,6 +43,10 @@ int main() {
     int version = gladLoadGL(glfwGetProcAddress);
     printf("GL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
 
+    // configure global opengl state
+    // -----------------------------
+    glEnable(GL_DEPTH_TEST);
+
     // Shaders
     // -------------------------------
     Shader shader = shader_create("../shaders/basic.vert", "../shaders/basic.frag");
@@ -131,7 +135,7 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
         // Clear screen
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Active shader
         shader_use(shader);

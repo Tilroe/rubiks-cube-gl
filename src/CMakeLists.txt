@@ -4,6 +4,7 @@ add_executable(rubix_cube main.c)
 target_link_libraries(rubix_cube 
 	PRIVATE glfw
 	PRIVATE glad_gl_core_33
+	PRIVATE stb_image
 
 	PRIVATE vector
 	PRIVATE matrix

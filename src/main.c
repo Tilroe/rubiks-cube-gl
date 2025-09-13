@@ -1,5 +1,6 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+#include <stb_image.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -10,11 +11,16 @@
 #include "matrix.h"
 #include "vector.h"
 
+#define GREEN 0.f
+#define BLUE 1.f
+#define ORANGE 2.f
+#define RED 3.f
+#define YELLOW 4.f
+#define WHITE 5.f
+#define BLACK 6.f
 
-# define WINDOW_WIDTH 800
-# define WINDOW_HEIGHT 600
-int wwidth = WINDOW_WIDTH;
-int wheight = WINDOW_HEIGHT;
+int wwidth = 800;
+int wheight = 600;
 
 void error_callback(int error_code, const char* description);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -31,7 +37,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Window creation
-    GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "rubix-cube-gl", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(wwidth, wheight, "rubix-cube-gl", NULL, NULL);
     if (!window) {
         glfwTerminate();
         return -1;
@@ -54,15 +60,85 @@ int main() {
     // Set up vertex data
     // -------------------------------
     float vertices[] = {
-        // position
-        -1, -1, -1,
-        -1, 1, -1,
-        1, -1, -1,
-        1, 1, -1,
-        -1, -1, 1,
-        -1, 1, 1,
-        1, -1, 1,
-        1, 1, 1,
+        // Front face (z = 1)
+        -1, -1,  1, // 0
+        -1,  1,  1, // 1
+         1,  1,  1, // 2
+         1, -1,  1, // 3
+        // Back face (z = -1)
+        -1, -1, -1, // 4
+        -1,  1, -1, // 5
+         1,  1, -1, // 6
+         1, -1, -1, // 7
+        // Left face (x = -1)
+        -1, -1, -1, // 8
+        -1,  1, -1, // 9
+        -1,  1,  1, // 10
+        -1, -1,  1, // 11
+        // Right face (x = 1)
+         1, -1,  1, // 12
+         1,  1,  1, // 13
+         1,  1, -1, // 14
+         1, -1, -1, // 15
+        // Top face (y = 1)
+        -1,  1,  1, // 16
+        -1,  1, -1, // 17
+         1,  1, -1, // 18
+         1,  1,  1, // 19
+        // Bottom face (y = -1)
+        -1, -1, -1, // 20
+        -1, -1,  1, // 21
+         1, -1,  1, // 22
+         1, -1, -1  // 23
+    };
+
+    float texture_info[] = {
+        // tex coords   // color
+        // Front face (RED)
+        0.f, 0.f, RED,
+        0.f, 1.f, RED,
+        1.f, 1.f, RED,
+        1.f, 0.f, RED,
+        // Back face (BLUE)
+        0.f, 0.f, BLUE,
+        0.f, 1.f, BLUE,
+        1.f, 1.f, BLUE,
+        1.f, 0.f, BLUE,
+        // Left face (RED)
+        0.f, 0.f, RED,
+        0.f, 1.f, RED,
+        1.f, 1.f, RED,
+        1.f, 0.f, RED,
+        // Right face (BLUE)
+        0.f, 0.f, BLUE,
+        0.f, 1.f, BLUE,
+        1.f, 1.f, BLUE,
+        1.f, 0.f, BLUE,
+        // Top face (RED)
+        0.f, 0.f, RED,
+        0.f, 1.f, RED,
+        1.f, 1.f, RED,
+        1.f, 0.f, RED,
+        // Bottom face (BLUE)
+        0.f, 0.f, BLUE,
+        0.f, 1.f, BLUE,
+        1.f, 1.f, BLUE,
+        1.f, 0.f, BLUE
+    };
+
+    unsigned int indices[] = {
+        // Front face
+        0, 1, 2, 0, 2, 3,
+        // Back face
+        4, 5, 6, 4, 6, 7,
+        // Left face
+        8, 9,10, 8,10,11,
+        // Right face
+       12,13,14,12,14,15,
+        // Top face
+       16,17,18,16,18,19,
+        // Bottom face
+       20,21,22,20,22,23
     };
 
     vec3 positions[] = {
@@ -70,47 +146,10 @@ int main() {
         {20,  1, -2}
     };
 
-    float colours[] = {
-        1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-    };
-
-    unsigned int indices[] = {
-        // Front face (z = 0)
-        0, 1, 2,
-        2, 1, 3,
-
-        // Back face (z = 2)
-        4, 6, 5,
-        5, 6, 7,
-
-        // Left face (x = 0)
-        0, 4, 1,
-        1, 4, 5,
-
-        // Right face (x = 2)
-        2, 3, 6,
-        6, 3, 7,
-
-        // Bottom face (y = 0)
-        0, 2, 4,
-        4, 2, 6,
-
-        // Top face (y = 2)
-        1, 5, 3,
-        3, 5, 7
-    };
-
-    unsigned int element_buffer, vertex_buffer, colour_buffer, VAO;
+    unsigned int element_buffer, vertex_buffer, texture_info_buffer, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &vertex_buffer);
-    glGenBuffers(1, &colour_buffer);
+    glGenBuffers(1, &texture_info_buffer);
     glGenBuffers(1, &element_buffer);
 
     glBindVertexArray(VAO);
@@ -123,11 +162,35 @@ int main() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, colour_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(colours), colours, GL_STATIC_DRAW);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, texture_info_buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(texture_info), texture_info, GL_STATIC_DRAW);
 
+    // tex coord
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+    // colour
+    glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)(2 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+
+    // load and create a texture 
+    // -------------------------
+    unsigned int texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    int tex_width, tex_height, tex_channels;
+    unsigned char *data = stbi_load("../resources/rubiks_texture.jpg", &tex_width, &tex_height, &tex_channels, 0);
+    if (data) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex_width, tex_height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else {
+        printf("Failed to load texture\n");
+    }
+    stbi_image_free(data);
     
     float angle = 0.f;
     // Render loop
@@ -160,7 +223,7 @@ int main() {
             mat_mul(model_translate, model_rotate, model);
 
             set_uniform_mat4f(shader, "model", model);
-            glDrawElements(GL_TRIANGLES, 3 * 2 * 6, GL_UNSIGNED_INT, 0); // 3 indices per triangle, 2 triangles per face, 6 faces
+            glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_INT, 0);
         }
 
         // Swamp buffers and poll I/O

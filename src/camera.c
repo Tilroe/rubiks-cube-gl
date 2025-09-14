@@ -4,7 +4,8 @@
 
 #define M_PI acos(-1.0)
 
-static vec3 pos = { 0, 0, 0 }; // Camera position
+// TODO: create function to move camera
+static vec3 pos = { 0, 5, -10 }; // Camera position
 
 void get_view_matrix(const vec3 target, const vec3 up, mat4 mat) {
 	/*

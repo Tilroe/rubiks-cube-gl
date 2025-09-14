@@ -11,6 +11,7 @@ target_link_libraries(rubix_cube
 	PRIVATE quaternion
 	PRIVATE shader
 	PRIVATE camera
+	PRIVATE cube
 )
 
 # Custom libraries
@@ -39,3 +40,5 @@ add_library(camera camera.c camera.h)
 target_link_libraries(camera
 	PUBLIC matrix
 )
+
+add_library(cube cube.c cube.h)

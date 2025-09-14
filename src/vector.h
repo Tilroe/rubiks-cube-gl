@@ -4,6 +4,14 @@
 typedef float vec3[3];		// {x, y, z}
 typedef float vec4[4];		// {x, y, z, w}
 
+#define FORWARD  (vec3){0.0f, 0.0f, 1.0f}
+#define BACKWARD (vec3){0.0f, 0.0f, -1.0f}
+#define UP       (vec3){0.0f, 1.0f, 0.0f}
+#define DOWN     (vec3){0.0f, -1.0f, 0.0f}
+#define RIGHT    (vec3){1.0f, 0.0f, 0.0f}
+#define LEFT     (vec3){-1.0f, 0.0f, 0.0f}
+
+
 void vec3_copy(vec3 dest, const vec3 src);
 void vec4_copy(vec4 dest, const vec4 src);
 

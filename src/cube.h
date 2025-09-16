@@ -2,7 +2,7 @@
 #define CUBE_H
 
 // Sets up cube data (vertex, index, texture)
-void setup_cube();
+void cube_init_data();
 
 // Get cube vertex data and size
 float *cube_vertex_info(int *size);

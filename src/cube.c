@@ -373,7 +373,7 @@ static void generate_cube_indices() {
     }
 }
 
-void setup_cube() {
+void cube_init_data() {
     generate_cube_vertices();
     generate_cube_indices();
 }

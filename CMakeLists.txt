@@ -7,7 +7,6 @@ add_subdirectory(lib/glfw)
 add_subdirectory(lib/glad/cmake)
 add_subdirectory(lib/stb_image)
 
-
 # Specify glad settings
 glad_add_library(glad_gl_core_33 REPRODUCIBLE API gl:core=3.3)
 

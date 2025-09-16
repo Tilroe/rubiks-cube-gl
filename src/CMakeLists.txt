@@ -2,20 +2,30 @@
 add_executable(rubix_cube main.c)
 
 target_link_libraries(rubix_cube 
-	PRIVATE glfw
-	PRIVATE glad_gl_core_33
-	PRIVATE stb_image
+	PRIVATE window
+	PRIVATE renderer
+)
 
-	PRIVATE vector
-	PRIVATE matrix
-	PRIVATE quaternion
+# Custom libraries
+
+add_library(window window.c window.h)
+target_link_libraries(window
+	PRIVATE glad_gl_core_33
+	PRIVATE glfw
+)
+
+add_library(renderer renderer.c renderer.h)
+target_link_libraries(renderer
+	PRIVATE glad_gl_core_33
+	PRIVATE glfw
+	PRIVATE stb_image
 	PRIVATE shader
+	PRIVATE window
 	PRIVATE camera
 	PRIVATE cube
 )
 
-# Custom libraries
-add_library(shader shader.h shader.c)
+add_library(shader shader.c shader.h)
 target_link_libraries(shader
 	PRIVATE glad_gl_core_33
 	PRIVATE read_file

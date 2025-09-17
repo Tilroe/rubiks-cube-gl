@@ -22,6 +22,9 @@ typedef struct {
 */
 quaternion quaternion_create(const vec3 axis, const float angle);
 
+// Multiplies (combines) two quaternions
+quaternion quaternion_mul(const quaternion a, const quaternion b);
+
 /*
 * quaternion_mat: Generate a rotation matrix from a quaternion
 * 

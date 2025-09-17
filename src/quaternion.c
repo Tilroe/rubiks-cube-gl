@@ -21,6 +21,27 @@ quaternion quaternion_create(const vec3 axis, const float angle) {
 	return q;
 }
 
+quaternion quaternion_mul(const quaternion a, const quaternion b) {
+	vec3 v1 = { a.x, a.y, a.z };
+	vec3 v2 = { b.x, b.y, b.z };
+
+	vec3 v3;
+	vec3_cross(v1, v2, v3);
+	float dot = vec3_dot(v1, v2);
+
+	v3[0] += (a.s * v2[0]) + (b.s * v1[0]);
+	v3[1] += (a.s * v2[1]) + (b.s * v1[1]);
+	v3[2] += (a.s * v2[2]) + (b.s * v1[2]);
+	
+	quaternion q;
+	q.s = a.s * b.s - dot;
+	q.x = v3[0];
+	q.y = v3[1];
+	q.z = v3[2];
+
+	return q;
+}
+
 void quaternion_mat(const quaternion q, mat4 mat) {
 	float x2  = q.x + q.x;
 	float y2  = q.y + q.y;

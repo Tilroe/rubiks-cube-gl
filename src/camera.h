@@ -3,7 +3,13 @@
 
 #include "matrix.h"
 
-void get_view_matrix(const vec3 target, const vec3 up, mat4 mat);
+vec3* camera_pos();
+const vec3* camera_forward();
+const vec3* camera_up();
+
+void look_at(const vec3 target);
+
+void get_view_matrix(mat4 mat);
 
 void get_perspective_matrix(const float fovy, const float aspect, const float near, const float far, mat4 mat);
 

@@ -4,50 +4,62 @@
 
 #define M_PI acos(-1.0)
 
-// TODO: create function to move camera
-static vec3 pos = { 0, 5, -10 }; // Camera position
+static vec3 pos = { 0, 5, -10 };
+static vec3 forward = { 0, 0, 0 };
+static vec3 up = { 0, 1, 0 };
+static vec3 left = { 0 };
 
-void get_view_matrix(const vec3 target, const vec3 up, mat4 mat) {
+vec3 *camera_pos() {
+	return &pos;
+}
+
+const vec3 *camera_forward() {
+	return &forward;
+}
+
+const vec3 *camera_up() {
+	return &up;
+}
+
+void look_at(const vec3 target) {
 	/*
 	* OpenGL camera convention is camera at origin with forward down the -z axis
 	* This makes x axis on the right, and y axis up
-	* 
+	*
 	* So to transform camera coordinates to world coordinates, the mapping is
 	* forward -> -z
 	* up -> +y
 	* left -> -x
-	* 
+	*
 	* To get objects into camera space, first translate by the negative of the
 	* camera's position, then rotate to the camera's orientation
 	*/
 
 	// Foward vector
-	vec3 forward;
 	vec3_sub(target, pos, forward);
 	vec3_normalize(forward);
 
-	// Right vector
-	vec3 left;
+	// Left vector
 	vec3_cross(up, forward, left);
 	vec3_normalize(left);
 
 	// Orthogonal up vector (to make orthonormal basis)
-	vec3 o_up;
-	vec3_copy(o_up, up);
-	vec3_cross(forward, left, o_up);
-	vec3_normalize(o_up);
+	vec3_cross(forward, left, up);
+	vec3_normalize(up);
+}
 
+void get_view_matrix(mat4 mat) {
 	// Transpose to get world->camera
 	mat4 rotation = {
 		-left[0],		-left[1],		-left[2],		0,
-		o_up[0],		o_up[1],		o_up[2],		0,
+		up[0],			up[1],			up[2],			0,
 		-forward[0],	-forward[1],	-forward[2],	0,
 		0,				0,				0,				1
 	};
 
 	// Translation of camera to origin
 	mat4 translation;
-	translation_mat(translation, (vec3){ -pos[0], -pos[1], -pos[2] });
+	translation_mat((vec3) { -pos[0], -pos[1], -pos[2] }, translation);
 	
 	// Translate, then rotate
 	mat_mul(rotation, translation, mat);

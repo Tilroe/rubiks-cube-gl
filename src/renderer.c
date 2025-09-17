@@ -47,7 +47,8 @@ void draw() {
 
     // Camera & projection
     mat4 view_mat, proj_mat;
-    get_view_matrix((vec3) { 0, 0, 0 }, (vec3) { 0, 1, 0 }, view_mat);
+    look_at(*cube_pos());
+    get_view_matrix(view_mat);
     get_perspective_matrix(60.f, (float)window_width() / (float)window_height(), 0.1f, 100.f, proj_mat);
     set_uniform_mat4f(shader, "view", view_mat);
     set_uniform_mat4f(shader, "projection", proj_mat);
@@ -55,10 +56,10 @@ void draw() {
     // Drawing
     glBindVertexArray(VAO);
 
-    vec3 cube_position = { 0, 0, 0 };
-    mat4 model_translate;
-
-    translation_mat(model_translate, cube_position);
+    mat4 model_translate, model_rotate, model;
+    translation_mat(*cube_pos(), model_translate);
+    quaternion_mat(*cube_orientation(), model_rotate);
+    mat_mul(model_translate, model_rotate, model);
     set_uniform_mat4f(shader, "model", model_translate);
 
     int element_buffer_len; // TODO: Should I be querying every single time?

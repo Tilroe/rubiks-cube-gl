@@ -6,6 +6,7 @@
 vec3* camera_pos();
 const vec3* camera_forward();
 const vec3* camera_up();
+const vec3 *camera_left();
 
 void look_at(const vec3 target);
 

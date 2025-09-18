@@ -5,6 +5,8 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
+#include "mouse_handler.h"
+
 // Globals
 static GLFWwindow *window;
 static int wwidth = 800;
@@ -30,7 +32,10 @@ int window_init() {
     }
 
     glfwMakeContextCurrent(window);
+
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
+    glfwSetCursorPosCallback(window, cursor_position_callback);
 
     return 1;
 }

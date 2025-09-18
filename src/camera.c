@@ -21,6 +21,10 @@ const vec3 *camera_up() {
 	return &up;
 }
 
+const vec3 *camera_left() {
+	return &left;
+}
+
 void look_at(const vec3 target) {
 	/*
 	* OpenGL camera convention is camera at origin with forward down the -z axis

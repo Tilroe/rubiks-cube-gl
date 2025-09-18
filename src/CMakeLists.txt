@@ -12,6 +12,7 @@ add_library(window window.c window.h)
 target_link_libraries(window
 	PRIVATE glad_gl_core_33
 	PRIVATE glfw
+	PRIVATE mouse_handler
 )
 
 add_library(renderer renderer.c renderer.h)
@@ -30,6 +31,14 @@ target_link_libraries(shader
 	PRIVATE glad_gl_core_33
 	PRIVATE read_file
 	PUBLIC matrix
+)
+
+add_library(mouse_handler mouse_handler.c mouse_handler.h)
+target_link_libraries(mouse_handler
+	PUBLIC glfw
+	PRIVATE camera
+	PRIVATE cube
+	PRIVATE quaternion
 )
 
 add_library(read_file read_file.c read_file.h)

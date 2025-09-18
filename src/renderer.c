@@ -60,7 +60,7 @@ void draw() {
     translation_mat(*cube_pos(), model_translate);
     quaternion_mat(*cube_orientation(), model_rotate);
     mat_mul(model_translate, model_rotate, model);
-    set_uniform_mat4f(shader, "model", model_translate);
+    set_uniform_mat4f(shader, "model", model);
 
     int element_buffer_len; // TODO: Should I be querying every single time?
     glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &element_buffer_len);

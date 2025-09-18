@@ -27,5 +27,6 @@ float vec4_dot(const vec4 a, const vec4 b);
 void vec3_cross(const vec3 a, const vec3 b, vec3 c); // a x b = c
 void vec3_add(const vec3 a, const vec3 b, vec3 c); // a + b = c
 void vec3_sub(const vec3 a, const vec3 b, vec3 c); // a - b = c
+void vec3_scale(const float scale, vec3 v); // a = scale*a
 
 #endif

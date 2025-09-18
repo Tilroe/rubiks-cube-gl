@@ -63,3 +63,9 @@ void vec3_sub(const vec3 a, const vec3 b, vec3 c) {
     c[1] = a[1] - b[1];
     c[2] = a[2] - b[2];
 }
+
+void vec3_scale(const float scale, vec3 v) {
+    v[0] *= scale;
+    v[1] *= scale;
+    v[2] *= scale;
+}

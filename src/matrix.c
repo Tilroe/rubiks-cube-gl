@@ -27,7 +27,7 @@ void mat_mul(const mat4 a, const mat4 b, mat4 c) {
     }
 }
 
-void translation_mat(mat4 mat, const vec3 translation) {
+void translation_mat(const vec3 translation, mat4 mat) {
     ident(mat);
     mat[COORD_IDX(0, 3, 4)] = translation[0];
     mat[COORD_IDX(1, 3, 4)] = translation[1];

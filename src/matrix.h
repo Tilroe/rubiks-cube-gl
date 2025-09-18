@@ -31,7 +31,7 @@ void mat_mul(const mat4 a, const mat4 b, mat4 c);
 * @param[in] mat: output translation matrix
 * @param[in] translation: how much to translate by 
 */
-void translation_mat(mat4 mat, const vec3 translation);
+void translation_mat(const vec3 translation, mat4 mat);
 
 
 #endif // !MATRIX_H

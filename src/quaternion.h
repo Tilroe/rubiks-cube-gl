@@ -20,7 +20,7 @@ typedef struct {
 * 
 * @return quaternion representation of the rotation
 */
-quaternion quaternion_create(const vec3 axis, const float angle);
+quaternion quaternion_create(const vec3 axis, const float rads);
 
 // Multiplies (combines) two quaternions
 quaternion quaternion_mul(const quaternion a, const quaternion b);

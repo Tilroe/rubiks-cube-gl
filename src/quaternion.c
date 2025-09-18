@@ -6,11 +6,10 @@
 
 // Using https://www.songho.ca/opengl/gl_quaternion.html as a guide
 
-quaternion quaternion_create(const vec3 axis, const float angle) {
+quaternion quaternion_create(const vec3 axis, const float rads) {
 	vec3 axis_copy;
 	vec3_copy(axis_copy, axis);
 	vec3_normalize(axis_copy);
-	float rads = angle * (float)M_PI / 180.f;
 	float sine = sinf(rads);
 	
 	quaternion q;

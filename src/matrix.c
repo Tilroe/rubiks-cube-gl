@@ -14,6 +14,16 @@ void ident(mat4 mat) {
     }
 }
 
+void mat_vec_mul(const mat4 a, const vec4 b, vec4 c) {
+    for (int row = 0; row < 4; row++) {
+        float partial_sum = 0;
+        for (int i = 0; i < 4; i++) {
+            partial_sum += a[COORD_IDX(row, i, 4)] * b[i];
+        }
+        c[row] = partial_sum;
+    }
+}
+
 
 void mat_mul(const mat4 a, const mat4 b, mat4 c) {
     for (int row = 0; row < 4; row++) {

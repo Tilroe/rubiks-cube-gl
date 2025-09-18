@@ -16,6 +16,8 @@ void mat_copy(mat4 dest, const mat4 src);
 */
 void ident(mat4 mat);
 
+void mat_vec_mul(const mat4 a, const vec4 b, vec4 c);
+
 /*
 * mat_mul: Multiplies a by b (a on the left, b on the right). Stores the result in matrix c
 *

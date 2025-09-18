@@ -2,6 +2,9 @@
 
 #include <string.h> // for memcpy
 
+#include "vector.h"
+#include "quaternion.h"
+
 /*
 3󫢫 Cube (with center cube removed -> 26 total)
 
@@ -74,6 +77,12 @@ Back    -   Blue
 // Texture specific
 #define TEX_COORD_SIZE 2
 #define COLOUR_SIZE 1
+
+// -------------------------- Cube state ------------------------------
+
+static vec3 pos;
+static quaternion orientation;
+
 
 // -------------------------- 1 x 1 x 1 CUBE (Helper) -----------------
 
@@ -373,7 +382,21 @@ static void generate_cube_indices() {
     }
 }
 
+vec3 *cube_pos() {
+    return &pos;
+}
+
+quaternion *cube_orientation() {
+    return &orientation;
+}
+
 void cube_init_data() {
+    pos[0] = 0;
+    pos[1] = 0;
+    pos[2] = 0;
+
+    orientation = quaternion_create((vec3) { 0, 1, 0 }, 0.f);
+
     generate_cube_vertices();
     generate_cube_indices();
 }

@@ -1,6 +1,12 @@
 #ifndef CUBE_H
 #define CUBE_H
 
+#include "vector.h"
+#include "quaternion.h"
+
+vec3 *cube_pos();
+quaternion* cube_orientation();
+
 // Sets up cube data (vertex, index, texture)
 void cube_init_data();
 

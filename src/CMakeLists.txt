@@ -52,3 +52,7 @@ target_link_libraries(camera
 )
 
 add_library(cube cube.c cube.h)
+target_link_libraries(cube
+	PUBLIC vector
+	PUBLIC quaternion
+)

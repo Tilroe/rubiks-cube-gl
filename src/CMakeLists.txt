@@ -36,9 +36,11 @@ target_link_libraries(shader
 add_library(mouse_handler mouse_handler.c mouse_handler.h)
 target_link_libraries(mouse_handler
 	PUBLIC glfw
+	PRIVATE window
 	PRIVATE camera
 	PRIVATE cube
 	PRIVATE quaternion
+	PRIVATE ray
 )
 
 add_library(read_file read_file.c read_file.h)
@@ -53,6 +55,11 @@ target_link_libraries(matrix
 add_library(quaternion quaternion.c quaternion.h)
 target_link_libraries(quaternion
 	PUBLIC matrix
+)
+
+add_library(ray ray.c ray.h)
+target_link_libraries(ray
+	PUBLIC vector
 )
 
 add_library(camera camera.c camera.h)

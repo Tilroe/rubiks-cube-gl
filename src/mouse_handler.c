@@ -21,11 +21,7 @@ static void rotate_face();
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods) {
 	// button: GLFW_MOUSE_BUTTON_LEFT = 0, GLFW_MOUSE_BUTTON_RIGHT = 1
 	mouse_state[button] = action;
-
-	if (mouse_state[GLFW_MOUSE_BUTTON_RIGHT] == GLFW_PRESS) {
-		rotate_cube();
-	}
-	else if (mouse_state[GLFW_MOUSE_BUTTON_LEFT] == GLFW_PRESS) {
+	if (mouse_state[GLFW_MOUSE_BUTTON_LEFT] == GLFW_PRESS) {
 		ray r = calculate_ray();
 	}
 }

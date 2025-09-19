@@ -35,5 +35,7 @@ void mat_mul(const mat4 a, const mat4 b, mat4 c);
 */
 void translation_mat(const vec3 translation, mat4 mat);
 
+void mat_inverse(mat4 mat);
+
 
 #endif // !MATRIX_H

@@ -33,6 +33,11 @@ target_link_libraries(shader
 	PUBLIC matrix
 )
 
+add_library(kernels kernels.c kernels.h)
+add_library(kernels
+	PRIVATE OpenCL::Headers
+)
+
 add_library(mouse_handler mouse_handler.c mouse_handler.h)
 target_link_libraries(mouse_handler
 	PUBLIC glfw

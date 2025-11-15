@@ -5,6 +5,7 @@ add_subdirectory(src)
 # External libs
 add_subdirectory(lib/glfw)
 add_subdirectory(lib/glad/cmake)
+add_subdirectory(lib/OpenCL-Headers)
 add_subdirectory(lib/stb_image)
 
 # Specify glad settings

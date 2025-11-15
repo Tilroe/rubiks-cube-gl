@@ -34,7 +34,7 @@ target_link_libraries(shader
 )
 
 add_library(kernels kernels.c kernels.h)
-add_library(kernels
+target_link_libraries(kernels
 	PRIVATE OpenCL::Headers
 )
 

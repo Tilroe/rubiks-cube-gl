@@ -3,6 +3,7 @@
 
 #include "window.h"
 #include "renderer.h"
+#include "kernels.h"
 
 #define FPS 144
 #define MS_PER_UPDATE (1.0f / (FPS) * 1000)
@@ -16,8 +17,9 @@
 #endif
 
 int main() {
-    window_init();
-    renderer_init();
+    if (!window_init()) goto cleanup;
+    if (!renderer_init()) goto cleanup;
+    if (!opencl_init()) goto cleanup;
     
     // Render loop
     // -------------------------------
@@ -31,6 +33,7 @@ int main() {
         if (MS_PER_UPDATE > dt) SLEEP_MS(MS_PER_UPDATE - dt);
     }
 
+    cleanup:
     window_cleanup();
 
     return 0;

@@ -4,6 +4,7 @@ add_executable(rubix_cube main.c)
 target_link_libraries(rubix_cube 
 	PRIVATE window
 	PRIVATE renderer
+    PRIVATE kernels
 )
 
 # Custom libraries

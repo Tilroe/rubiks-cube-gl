@@ -17,3 +17,4 @@ add_subdirectory(src)
 # Stuff to copy to build directory
 file(COPY shaders DESTINATION .)
 file(COPY resources DESTINATION .)
+file(COPY kernels DESTINATION .)

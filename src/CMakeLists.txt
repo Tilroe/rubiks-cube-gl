@@ -35,7 +35,8 @@ target_link_libraries(shader
 
 add_library(kernels kernels.c kernels.h)
 target_link_libraries(kernels
-	PRIVATE OpenCL::Headers
+    PRIVATE OpenCL::Headers
+    PRIVATE OpenCL::OpenCL
 )
 
 add_library(mouse_handler mouse_handler.c mouse_handler.h)

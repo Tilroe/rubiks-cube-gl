@@ -4,10 +4,12 @@ add_executable(rubix_cube main.c)
 target_link_libraries(rubix_cube 
 	PRIVATE window
 	PRIVATE renderer
-    PRIVATE kernels
+    PRIVATE cl_kernels
 )
 
 # Custom libraries
+add_subdirectory(read_file)
+add_subdirectory(cl_kernels)
 
 add_library(window window.c window.h)
 target_link_libraries(window
@@ -34,11 +36,13 @@ target_link_libraries(shader
 	PUBLIC matrix
 )
 
-add_library(kernels kernels.c kernels.h)
-target_link_libraries(kernels
-    PRIVATE OpenCL::Headers
-    PRIVATE OpenCL::OpenCL
-)
+#add_library(kernels kernels.c kernels.h)
+#target_link_libraries(kernels
+#    PRIVATE OpenCL::Headers
+#    PRIVATE OpenCL::OpenCL
+#)
+
+
 
 add_library(mouse_handler mouse_handler.c mouse_handler.h)
 target_link_libraries(mouse_handler
@@ -49,8 +53,6 @@ target_link_libraries(mouse_handler
 	PRIVATE quaternion
 	PRIVATE ray
 )
-
-add_library(read_file read_file.c read_file.h)
 
 add_library(vector vector.c vector.h)
 

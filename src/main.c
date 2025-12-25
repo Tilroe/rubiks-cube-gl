@@ -19,7 +19,7 @@
 int main() {
     if (!window_init()) goto cleanup;
     if (!renderer_init()) goto cleanup;
-    if (!opencl_init()) goto cleanup;
+    if (!cl_kernels_init()) goto cleanup;
     
     // Render loop
     // -------------------------------

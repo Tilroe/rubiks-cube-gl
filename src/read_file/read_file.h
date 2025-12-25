@@ -1,6 +1,8 @@
 #ifndef READ_FILE_H
 #define READ_FILE_H
 
+#define STRINGIFY(x) #x
+
 /*
 * read_file: Reads an entire file into a string. The string is allocated on the heap, so it must be freed after.
 *

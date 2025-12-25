@@ -7,7 +7,7 @@
  *      - finding platform, devices
  *      - Creating context, command queue
  */
-int opencl_init();
+int cl_kernels_init();
 
 /*
  * vector_add:

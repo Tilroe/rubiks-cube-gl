@@ -1,6 +1,8 @@
 ﻿cmake_minimum_required(VERSION 3.10)
 project(rubix-cube-gl C)
 
+set(RESOURCE_DIR "${PROJECT_SOURCE_DIR}/resources")
+
 # External libs
 add_subdirectory(lib/glfw)
 add_subdirectory(lib/glad/cmake)

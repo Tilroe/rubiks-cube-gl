@@ -8,7 +8,7 @@
 #include "CL/opencl.h"
 
 #include "ray.h"
-#include "read_file.h"
+#include "read_file/read_file.h"
 
 #define CL_CHECK(exp) ((exp) == CL_SUCCESS)
 
@@ -17,7 +17,7 @@ static cl_device_id device;
 static cl_context context;
 static cl_command_queue queue;
 
-int opencl_init() {
+int cl_kernels_init() {
     cl_int error_code_ret;
     if (!CL_CHECK(error_code_ret = clGetPlatformIDs(1, &platform, NULL))) return 0;
     if (!(CL_CHECK(error_code_ret = clGetDeviceIDs(platform,CL_DEVICE_TYPE_GPU,1, &device, NULL))

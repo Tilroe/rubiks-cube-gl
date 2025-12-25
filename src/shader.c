@@ -5,7 +5,7 @@
 
 #include <glad/gl.h>
 
-#include "read_file.h"
+#include "read_file/read_file.h"
 #include "matrix.h"
 
 static int check_shader_compilation(unsigned int shader_id);
